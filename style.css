@@ -1,0 +1,322 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Inter, Arial, sans-serif;
+}
+
+body {
+  background: #f4f5f7;
+  color: #222;
+}
+
+.app {
+  max-width: 1100px;
+  margin: auto;
+  padding: 24px;
+  padding-bottom: 110px;
+}
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+.header span {
+  color: #777;
+  font-size: 14px;
+}
+
+.header h1 {
+  font-size: 30px;
+  color: #222;
+}
+
+.filtros {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.filtros select {
+  padding: 14px;
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  background: #fff;
+  color: #222;
+  outline: none;
+  font-weight: 600;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.card,
+.chart-box,
+.form,
+.list-item,
+.person-card {
+  background: #fff;
+  border: 1px solid #e3e5e8;
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+}
+
+.card {
+  padding: 20px;
+}
+
+.card span {
+  display: block;
+  color: #777;
+  margin-bottom: 8px;
+}
+
+.card strong {
+  font-size: 24px;
+}
+
+.single-card {
+  grid-template-columns: minmax(220px, 1fr);
+}
+
+.chart-box {
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.chart-box h2 {
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+
+.form {
+  padding: 20px;
+  display: grid;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.form input,
+.form select {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background: #fafafa;
+  outline: none;
+  color: #222;
+}
+
+.form input:focus,
+.form select:focus,
+.filtros select:focus {
+  border-color: #222;
+  background: #fff;
+}
+
+.form button {
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background: #222;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.form button:hover {
+  background: #444;
+}
+
+.list {
+  display: grid;
+  gap: 12px;
+}
+
+.list p {
+  color: #777;
+}
+
+.list-item {
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.item-info h3 {
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.item-info p {
+  color: #777;
+  font-size: 14px;
+}
+
+.item-value {
+  text-align: right;
+  min-width: 120px;
+}
+
+.item-value strong {
+  display: block;
+}
+
+.item-value button {
+  margin-top: 8px;
+  border: none;
+  background: #eee;
+  padding: 8px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.item-value button:hover {
+  background: #ddd;
+}
+
+.person-card {
+  padding: 16px;
+}
+
+.person-card-header,
+.sub-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.person-card-header {
+  padding-bottom: 12px;
+  border-bottom: 1px solid #edf0f2;
+}
+
+.person-card-header strong {
+  font-size: 22px;
+}
+
+.sub-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.sub-list-item {
+  padding: 12px;
+  border-radius: 14px;
+  background: #f8f9fa;
+}
+
+.entrada {
+  color: #1f8f4d;
+}
+
+.gasto {
+  color: #b83232;
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: 720px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 22px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  padding: 8px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+  z-index: 10;
+}
+
+.bottom-nav button {
+  border: none;
+  background: transparent;
+  padding: 12px 6px;
+  border-radius: 16px;
+  cursor: pointer;
+  color: #777;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.bottom-nav button.active {
+  background: #222;
+  color: #fff;
+}
+
+canvas {
+  width: 100% !important;
+  max-height: 300px;
+}
+
+@media (max-width: 800px) {
+  .app {
+    padding: 18px;
+    padding-bottom: 110px;
+  }
+
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .header h1 {
+    font-size: 26px;
+  }
+
+  .card strong {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 520px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .filtros {
+    grid-template-columns: 1fr;
+  }
+
+  .bottom-nav {
+    bottom: 10px;
+    width: calc(100% - 20px);
+  }
+
+  .bottom-nav button {
+    font-size: 11px;
+    padding: 10px 4px;
+  }
+
+  .list-item {
+    align-items: flex-start;
+  }
+
+  .person-card-header,
+  .sub-list-item {
+    align-items: flex-start;
+  }
+
+  .item-value {
+    min-width: 90px;
+  }
+}

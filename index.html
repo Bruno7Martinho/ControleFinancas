@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Controle Financeiro</title>
+
+  <link rel="stylesheet" href="style.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+</head>
+
+<body>
+
+  <main class="app">
+
+    <section id="dashboard" class="page active">
+      <header class="header">
+        <div>
+          <span>Resumo financeiro</span>
+          <h1>Meu Controle</h1>
+        </div>
+      </header>
+
+      <div class="filtros">
+        <select id="filtroMes">
+          <option value="01">Janeiro</option>
+          <option value="02">Fevereiro</option>
+          <option value="03">Março</option>
+          <option value="04">Abril</option>
+          <option value="05">Maio</option>
+          <option value="06">Junho</option>
+          <option value="07">Julho</option>
+          <option value="08">Agosto</option>
+          <option value="09">Setembro</option>
+          <option value="10">Outubro</option>
+          <option value="11">Novembro</option>
+          <option value="12">Dezembro</option>
+        </select>
+
+        <select id="filtroAno">
+          <option value="2025">2025</option>
+          <option value="2026">2026</option>
+          <option value="2027">2027</option>
+          <option value="2028">2028</option>
+        </select>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <span>Entradas</span>
+          <strong id="totalEntradas">R$ 0,00</strong>
+        </div>
+
+        <div class="card">
+          <span>Gastos</span>
+          <strong id="totalGastos">R$ 0,00</strong>
+        </div>
+
+        <div class="card">
+          <span>Saldo</span>
+          <strong id="saldoAtual">R$ 0,00</strong>
+        </div>
+
+        <div class="card">
+          <span>Investido</span>
+          <strong id="totalInvestido">R$ 0,00</strong>
+        </div>
+      </div>
+
+      <div class="chart-box">
+        <h2>Entradas x Gastos</h2>
+        <canvas id="chartResumo"></canvas>
+      </div>
+
+      <div class="chart-box">
+        <h2>Gastos por categoria</h2>
+        <canvas id="chartCategorias"></canvas>
+      </div>
+    </section>
+
+    <section id="lancamentos" class="page">
+      <header class="header">
+        <div>
+          <span>Organize seu dinheiro</span>
+          <h1>Entradas e Gastos</h1>
+        </div>
+      </header>
+
+      <form id="formLancamento" class="form">
+        <input type="text" id="descricao" placeholder="Descrição" required />
+
+        <select id="tipo" required>
+          <option value="">Tipo</option>
+          <option value="entrada">Entrada</option>
+          <option value="gasto">Gasto</option>
+        </select>
+
+        <select id="pagamento" required>
+          <option value="">Forma</option>
+          <option value="salario">Salário</option>
+          <option value="debito">Débito</option>
+          <option value="credito">Crédito</option>
+          <option value="pix">Pix</option>
+          <option value="dinheiro">Dinheiro</option>
+        </select>
+
+        <select id="categoria" required>
+          <option value="">Categoria</option>
+          <option value="Salário">Salário</option>
+          <option value="Alimentação">Alimentação</option>
+          <option value="Transporte">Transporte</option>
+          <option value="Moradia">Moradia</option>
+          <option value="Cartão de crédito">Cartão de crédito</option>
+          <option value="Lazer">Lazer</option>
+          <option value="Saúde">Saúde</option>
+          <option value="Investimento">Investimento</option>
+          <option value="Outros">Outros</option>
+        </select>
+
+        <input type="number" id="valor" placeholder="Valor R$" step="0.01" required />
+        <input type="date" id="data" required />
+
+        <button type="submit">Adicionar lançamento</button>
+      </form>
+
+      <div class="list" id="listaLancamentos"></div>
+    </section>
+
+    <section id="cartoes" class="page">
+      <header class="header">
+        <div>
+          <span>Controle por forma de pagamento</span>
+          <h1>Cartões</h1>
+        </div>
+      </header>
+
+      <div class="chart-box">
+        <h2>Gastos por forma</h2>
+        <canvas id="chartPagamentos"></canvas>
+      </div>
+
+      <div class="list" id="listaCartoes"></div>
+    </section>
+
+    <section id="devedores-cartao" class="page">
+      <header class="header">
+        <div>
+          <span>Contas divididas no cartão</span>
+          <h1>Devem Cartão</h1>
+        </div>
+      </header>
+
+      <div class="cards single-card">
+        <div class="card">
+          <span>Total a receber</span>
+          <strong id="totalDevedoresCartao">R$ 0,00</strong>
+        </div>
+      </div>
+
+      <form id="formDividaCartao" class="form">
+        <input type="text" id="pessoaDividaCartao" placeholder="Nome da pessoa" required />
+        <input type="text" id="descricaoDividaCartao" placeholder="Conta ou compra" required />
+        <input type="number" id="valorDividaCartao" placeholder="Valor R$" step="0.01" required />
+        <input type="date" id="dataDividaCartao" required />
+
+        <button type="submit">Adicionar conta</button>
+      </form>
+
+      <div class="list" id="listaDevedoresCartao"></div>
+    </section>
+
+    <section id="investimentos" class="page">
+      <header class="header">
+        <div>
+          <span>Acompanhe seu patrimônio</span>
+          <h1>Investimentos</h1>
+        </div>
+      </header>
+
+      <form id="formInvestimento" class="form">
+        <input type="text" id="nomeInvestimento" placeholder="Nome do investimento" required />
+
+        <select id="tipoInvestimento" required>
+          <option value="">Tipo</option>
+          <option value="Tesouro Direto">Tesouro Direto</option>
+          <option value="CDB">CDB</option>
+          <option value="FII">FII</option>
+          <option value="Ações">Ações</option>
+          <option value="Cripto">Cripto</option>
+          <option value="Outros">Outros</option>
+        </select>
+
+        <input type="number" id="valorInvestimento" placeholder="Valor investido R$" step="0.01" required />
+        <input type="date" id="dataInvestimento" required />
+
+        <button type="submit">Adicionar investimento</button>
+      </form>
+
+      <div class="chart-box">
+        <h2>Investimentos por tipo</h2>
+        <canvas id="chartInvestimentos"></canvas>
+      </div>
+
+      <div class="list" id="listaInvestimentos"></div>
+    </section>
+
+  </main>
+
+  <nav class="bottom-nav">
+    <button class="nav-btn active" data-page="dashboard">Resumo</button>
+    <button class="nav-btn" data-page="lancamentos">Entradas/Gastos</button>
+    <button class="nav-btn" data-page="cartoes">Cartões</button>
+    <button class="nav-btn" data-page="devedores-cartao">Devem Cartão</button>
+    <button class="nav-btn" data-page="investimentos">Investimentos</button>
+  </nav>
+
+  <script src="app.js"></script>
+</body>
+</html>
